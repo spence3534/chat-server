@@ -1,0 +1,195 @@
+definitions:
+  response.JsonResult:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /createUser:
+    post:
+      parameters:
+      - description: 用户名
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: 手机号
+        in: formData
+        name: phone
+        required: true
+        type: string
+      - description: 密码
+        in: formData
+        name: password
+        required: true
+        type: string
+      - description: 确认密码
+        in: formData
+        name: repassword
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.JsonResult'
+      summary: 注册接口
+      tags:
+      - 用户模块
+  /getUserList:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.JsonResult'
+      summary: 查询所有用户信息
+      tags:
+      - 用户模块
+  /index:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      tags:
+      - 首页
+  /login:
+    post:
+      parameters:
+      - description: 用户名
+        in: formData
+        name: name
+        type: string
+      - description: 密码
+        in: formData
+        name: password
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.JsonResult'
+      summary: 登录接口
+      tags:
+      - 用户模块
+  /user/deleteUser:
+    get:
+      parameters:
+      - description: 用户id
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.JsonResult'
+      summary: 删除用户
+      tags:
+      - 用户模块
+  /user/getUserInfo:
+    get:
+      parameters:
+      - description: 用户id
+        in: query
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.JsonResult'
+      summary: 查询用户信息
+      tags:
+      - 用户模块
+  /user/searchFriends:
+    get:
+      parameters:
+      - description: 用户id
+        in: query
+        name: userId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.JsonResult'
+      summary: 查询好友列表
+      tags:
+      - 用户模块
+  /user/sendUserMsg:
+    get:
+      parameters:
+      - description: userId
+        in: formData
+        name: userId
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.JsonResult'
+      summary: websocket发送消息
+      tags:
+      - 用户模块
+  /user/updateUserInfo:
+    post:
+      parameters:
+      - description: id
+        in: formData
+        name: id
+        required: true
+        type: string
+      - description: name
+        in: formData
+        name: name
+        type: string
+      - description: password
+        in: formData
+        name: password
+        type: string
+      - description: headPic
+        in: formData
+        name: headPic
+        type: string
+      - description: email
+        in: formData
+        name: email
+        type: string
+      - description: phone
+        in: formData
+        name: phone
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.JsonResult'
+      summary: 更新用户信息
+      tags:
+      - 用户模块
+swagger: "2.0"
