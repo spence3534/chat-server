@@ -39,5 +39,11 @@ func Router() *gin.Engine {
 		user.GET("/dddFriend", service.AddFriend)
 		user.GET("/searchFriend", service.SearchFriend)
 	}
+
+	// 上传文件
+	file := r.Group("file")
+	{
+		file.POST("/uploadImage", service.UploadImage)
+	}
 	return r
 }

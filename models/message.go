@@ -124,10 +124,11 @@ func udpSendProc() {
 		IP:   net.IPv4(192, 168, 0, 255),
 		Port: 3000,
 	})
-	defer con.Close()
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("conn error", err)
+		return
 	}
+	defer con.Close()
 
 	for {
 		select {
@@ -148,11 +149,12 @@ func udpRecvProc() {
 		IP:   net.IPv4zero,
 		Port: 3000,
 	})
-	defer con.Close()
 
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("listen udp error", err)
 	}
+
+	defer con.Close()
 
 	for {
 		var buf [512]byte

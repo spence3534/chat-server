@@ -3,6 +3,7 @@ package utils
 import (
 	"context"
 	"fmt"
+	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 	"github.com/redis/go-redis/v9"
 	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
@@ -73,6 +74,24 @@ func InitRedis() {
 	} else {
 		fmt.Println("redis init success...", pong)
 	}
+}
+
+func InitOss() (*oss.Client, error) {
+	provider, err := oss.NewEnvironmentVariableCredentialsProvider()
+	if err != nil {
+		fmt.Println("get oss key Error", err)
+		return nil, err
+	}
+
+	id := provider.GetCredentials().GetAccessKeyID()
+	secret := provider.GetCredentials().GetAccessKeySecret()
+
+	client, err := oss.New("https://oss-cn-hangzhou.aliyuncs.com", id, secret, oss.SetCredentialsProvider(&provider))
+	if err != nil {
+		fmt.Println("oss new error", err)
+	}
+
+	return client, nil
 }
 
 var (
