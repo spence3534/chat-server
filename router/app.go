@@ -36,7 +36,7 @@ func Router() *gin.Engine {
 		user.GET("/sendMessage", service.SendMessage)
 		user.GET("/sendUserMsg", service.SendUserMsg)
 		user.GET("/getFriendList", service.GetFriendList)
-		user.GET("/dddFriend", service.AddFriend)
+		user.POST("/addFriend", service.AddFriend)
 		user.GET("/searchFriend", service.SearchFriend)
 	}
 

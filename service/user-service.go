@@ -247,13 +247,18 @@ func GetFriendList(c *gin.Context) {
 // @Param userId query string true "用户id"
 // @Param targetId query string true "目标id"
 // @Success 200 {object} response.JsonResult
-// @Router /user/getFriendList [get]
+// @Router /user/AddFriend [post]
 func AddFriend(c *gin.Context) {
-	id := c.Query("userId")
-	targetId := c.Query("targetId")
+	id := c.PostForm("userId")
+	targetId := c.PostForm("targetId")
 	uId, _ := strconv.Atoi(id)
 	uTargetId, _ := strconv.Atoi(targetId)
-	models.AddFriend(uint(uId), uint(uTargetId))
+	code := models.AddFriend(uint(uId), uint(uTargetId))
+	if code == 1 {
+		response.OkWithMessage("添加成功", c)
+	} else {
+		response.FailWithMessage("添加好友失败", c)
+	}
 }
 
 // SearchFriend godoc

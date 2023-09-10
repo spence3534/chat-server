@@ -20,23 +20,32 @@ func (c *Contact) TableName() string {
 
 // 添加好友
 
-func AddFriend(userId uint, targetId uint) {
+func AddFriend(userId uint, targetId uint) int {
 	data := Contact{}
-	utils.DB.Where("owner_id = ? AND target_id = ?", userId, targetId).First(&data)
-	if data.TargetID != 0 {
-		fmt.Println("不是好友")
-		var friend = []Contact{
-			{
-				OwnerID:  userId,
-				TargetID: targetId,
-			},
-			{
-				OwnerID:  targetId,
-				TargetID: userId,
-			},
+	if targetId != 0 {
+		utils.DB.Where("owner_id = ? AND target_id = ?", userId, targetId).First(&data)
+		if data.OwnerID == 0 {
+			if data.TargetID == 0 {
+				fmt.Println("不是好友")
+				var friend = []Contact{
+					{
+						OwnerID:  userId,
+						TargetID: targetId,
+						Type:     1,
+					},
+					{
+						OwnerID:  targetId,
+						TargetID: userId,
+						Type:     1,
+					},
+				}
+				utils.DB.Create(&friend)
+				return 1
+			}
 		}
-		utils.DB.Create(&friend)
+		return 0
 	}
+	return 0
 }
 
 // 好友列表
