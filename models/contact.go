@@ -27,6 +27,15 @@ func AddFriend(userId uint, targetId uint) int {
 		if data.OwnerID == 0 {
 			if data.TargetID == 0 {
 				fmt.Println("不是好友")
+				// 开启事务
+				tx := utils.DB.Begin()
+
+				// 事务一旦开始，不管什么异常最终都会Rollback
+				defer func() {
+					if r := recover(); r != nil {
+						tx.Rollback()
+					}
+				}()
 				var friend = []Contact{
 					{
 						OwnerID:  userId,
@@ -39,7 +48,12 @@ func AddFriend(userId uint, targetId uint) int {
 						Type:     1,
 					},
 				}
-				utils.DB.Create(&friend)
+				if err := tx.Create(&friend).Error; err != nil {
+					fmt.Println(err)
+					tx.Rollback()
+					return 0
+				}
+
 				return 1
 			}
 		}

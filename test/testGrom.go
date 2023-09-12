@@ -19,5 +19,5 @@ func main() {
 		fmt.Println(err)
 	}
 
-	db.AutoMigrate(&models.Contact{}, &models.GroupBasic{})
+	db.AutoMigrate(&models.Group{})
 }

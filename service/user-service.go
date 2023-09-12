@@ -274,3 +274,31 @@ func SearchFriend(c *gin.Context) {
 		response.OkWithData(user, "查询成功", c)
 	}
 }
+
+// CreateGroup godoc
+// @Tags 用户模块
+// @Summary 创建群
+// @Param userId query string true "用户id"
+// @Param name query string true "群名"
+// @Success 200 {object} response.JsonResult
+// @Router /user/createGroup [post]
+func CreateGroup(c *gin.Context) {
+	userId := c.PostForm("userId")
+	name := c.PostForm("name")
+
+	uid, _ := strconv.Atoi(userId)
+
+	group := models.Group{}
+	group.GroupName = name
+	group.OwnerId = uint(uid)
+	group.GroupLeaderId = uint(uid)
+
+	code, msg := models.CreateGroup(group)
+
+	if code != -1 {
+		response.OkWithMessage(msg, c)
+	} else {
+		response.FailWithMessage(msg, c)
+	}
+
+}

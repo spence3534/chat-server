@@ -6,9 +6,9 @@ type GroupBasic struct {
 	common.GlobalModel
 	Name      string
 	OwnerID   uint
-	GroupHead string
-	Type      int
-	Desc      string
+	GroupHead string `json:"groupHead"`
+	Type      int    `json:"type"`
+	Desc      string `json:"desc"`
 }
 
 func (b GroupBasic) TableName() string {
