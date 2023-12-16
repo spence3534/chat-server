@@ -302,3 +302,30 @@ func CreateGroup(c *gin.Context) {
 	}
 
 }
+
+// GetGroup godoc
+// @Tags 用户模块
+// @Summary 获取群列表
+// @Param id query string true "用户id"
+// @Success 200 {object} response.JsonResult
+// @Router /user/getGroup [get]
+func GetGroup(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Query("userId"))
+	data, msg := models.GetGroup(uint(id))
+	if len(data) == 0 {
+		response.OkWithData(data, "查询失败", c)
+	} else {
+		response.OkWithData(data, msg, c)
+	}
+}
+
+func JoinGroup(c *gin.Context) {
+	id, _ := strconv.Atoi(c.PostForm("userId"))
+	groupNameOrId := c.PostForm("groupNameOrId")
+	code, msg := models.JoinGroup(groupNameOrId, uint(id))
+	if code == 0 {
+		response.OkWithMessage(msg, c)
+	} else {
+		response.FailWithMessage(msg, c)
+	}
+}

@@ -39,6 +39,8 @@ func Router() *gin.Engine {
 		user.POST("/addFriend", service.AddFriend)
 		user.GET("/searchFriend", service.SearchFriend)
 		user.POST("/createGroup", service.CreateGroup)
+		user.GET("/getGroup", service.GetGroup)
+		user.POST("/joinGroup", service.JoinGroup)
 	}
 
 	// 上传文件

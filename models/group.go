@@ -3,6 +3,7 @@ package models
 import (
 	"chat-server/models/common"
 	"chat-server/utils"
+	"fmt"
 )
 
 type Group struct {
@@ -30,4 +31,30 @@ func CreateGroup(group Group) (int, string) {
 
 	utils.DB.Create(&group)
 	return 0, "创建成功"
+}
+
+func GetGroup(id uint) ([]Group, string) {
+	group := []Group{}
+	utils.DB.Where("owner_id = ?", id).Find(&group)
+	return group, "查询成功"
+}
+
+func JoinGroup(groupNameAndId interface{}, userId uint) (int, string) {
+	contact := Contact{}
+	group := Group{}
+	contact.OwnerID = userId
+	contact.Type = 2
+	utils.DB.Where("id = ? or group_name = ?", groupNameAndId, groupNameAndId).First(&group)
+	if group.GroupName == "" {
+		return -1, "该群不存在"
+	}
+	contact.TargetID = group.ID
+	utils.DB.Where("owner_id = ? and target_id = ? and type = 2", userId, group.ID).First(&contact)
+	if contact.CreatedAt.IsZero() {
+		utils.DB.Create(&contact)
+		return 0, "加群成功"
+	} else {
+		fmt.Println(contact)
+		return -1, "不能重复加群"
+	}
 }

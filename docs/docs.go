@@ -135,6 +135,70 @@ const docTemplate = `{
                 }
             }
         },
+        "/user/AddFriend": {
+            "post": {
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "添加好友",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户id",
+                        "name": "userId",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "目标id",
+                        "name": "targetId",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.JsonResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/createGroup": {
+            "post": {
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "创建群",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户id",
+                        "name": "userId",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "群名",
+                        "name": "name",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.JsonResult"
+                        }
+                    }
+                }
+            }
+        },
         "/user/deleteUser": {
             "get": {
                 "produces": [
@@ -144,6 +208,56 @@ const docTemplate = `{
                     "用户模块"
                 ],
                 "summary": "删除用户",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户id",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.JsonResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/getFriendList": {
+            "get": {
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "搜索好友",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "手机号",
+                        "name": "phone",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.JsonResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/getGroup": {
+            "get": {
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "搜索好友",
                 "parameters": [
                     {
                         "type": "string",
@@ -174,31 +288,6 @@ const docTemplate = `{
                         "type": "string",
                         "description": "用户id",
                         "name": "id",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.JsonResult"
-                        }
-                    }
-                }
-            }
-        },
-        "/user/searchFriends": {
-            "get": {
-                "tags": [
-                    "用户模块"
-                ],
-                "summary": "查询好友列表",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "用户id",
-                        "name": "userId",
                         "in": "query",
                         "required": true
                     }

@@ -87,6 +87,48 @@ paths:
       summary: 登录接口
       tags:
       - 用户模块
+  /user/AddFriend:
+    post:
+      parameters:
+      - description: 用户id
+        in: query
+        name: userId
+        required: true
+        type: string
+      - description: 目标id
+        in: query
+        name: targetId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.JsonResult'
+      summary: 添加好友
+      tags:
+      - 用户模块
+  /user/createGroup:
+    post:
+      parameters:
+      - description: 用户id
+        in: query
+        name: userId
+        required: true
+        type: string
+      - description: 群名
+        in: query
+        name: name
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.JsonResult'
+      summary: 创建群
+      tags:
+      - 用户模块
   /user/deleteUser:
     get:
       parameters:
@@ -105,6 +147,38 @@ paths:
       summary: 删除用户
       tags:
       - 用户模块
+  /user/getFriendList:
+    get:
+      parameters:
+      - description: 手机号
+        in: query
+        name: phone
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.JsonResult'
+      summary: 搜索好友
+      tags:
+      - 用户模块
+  /user/getGroup:
+    get:
+      parameters:
+      - description: 用户id
+        in: query
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.JsonResult'
+      summary: 搜索好友
+      tags:
+      - 用户模块
   /user/getUserInfo:
     get:
       parameters:
@@ -119,22 +193,6 @@ paths:
           schema:
             $ref: '#/definitions/response.JsonResult'
       summary: 查询用户信息
-      tags:
-      - 用户模块
-  /user/searchFriends:
-    get:
-      parameters:
-      - description: 用户id
-        in: query
-        name: userId
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/response.JsonResult'
-      summary: 查询好友列表
       tags:
       - 用户模块
   /user/sendUserMsg:
